@@ -11,7 +11,7 @@ return array(
                         'route'    => '/task[/:action[/:id]]',
                         'defaults' => array(
                         '__NAMESPACE__' => 'Checklist\Controller',
-                        'controller'    => 'Task',
+                        'controller'    => 'TaskController',
                         'action'        => 'index',
                     ),
                     /*
