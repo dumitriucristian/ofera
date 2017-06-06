@@ -12,10 +12,12 @@ return array(
                         'controller'    => 'Task',
                         'action'        => 'index',
                     ),
+                    /*
                     'constraints' => array(
                         'action' => '(add|edit|delete)',
                         'id'     => '[0-9]+',
                     ),
+                    */
                 ),
             ),
         ),
