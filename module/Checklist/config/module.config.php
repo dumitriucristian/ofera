@@ -1,4 +1,6 @@
-<?php namespace Checklist;
+<?php
+
+namespace Checklist;
 
 return array(
     'router' => array(
@@ -8,7 +10,7 @@ return array(
                     'options' => array(
                         'route'    => '/task[/:action[/:id]]',
                         'defaults' => array(
-                        '__NAMESPACE__' => 'Checklist\Controller',
+                        '__NAMESPACE__' => 'Checklist\Controller\TaskController',
                         'controller'    => 'Task',
                         'action'        => 'index',
                     ),
@@ -24,3 +26,4 @@ return array(
     )
 );
 
+/*'controller'    => 'Checklist\Controller\TaskController',*/
