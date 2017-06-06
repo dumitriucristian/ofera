@@ -6,7 +6,7 @@
  * Time: 15:02
  */
 
-namespace Checklist;
+namespace Checklist\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 
