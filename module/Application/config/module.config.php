@@ -26,7 +26,18 @@ return array(
             // new controllers and actions without needing to create a new
             // module. Simply drop new controllers in, and you can access them
             // using the path /application/:controller/:action
-            'application' => array(
+            's' => array(
+                'type'    => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/doi',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Application\Controller',
+                        'controller'    => 'Index',
+                        'action'        => 'doi',
+                    ),
+                ),
+            ),
+                'applications' => array(
                 'type'    => 'Literal',
                 'options' => array(
                     'route'    => '/application',

@@ -2,29 +2,31 @@
 
 namespace Checklist;
 
+
 return array(
     'router' => array(
         'routes' => array(
-            'checklist' => array(
-                'type'    => 'Literal',
-                'options' => array(
-                    'route'    => '/task',
-                    'defaults' => array(
-                        '__NAMESPACE__' => 'Checklist\Controller',
-                        'controller'    => 'TaskController',
-                        'action'        => 'index',
-                    ),
-                ),
-                'may_terminate' => true,
-                'child_routes' => array(
-                    'default' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'    => '/[:controller[/:action]]',
-                        ),
-                    ),
-                ),
-            ),
+          'default' => array(
+              'type' => 'Zend\Mvc\Router\Http\Literal',
+              'options'=> array(
+                  'route' => '/task',
+                  'defaults' => array(
+                      '__NAMESPACE__' => 'Checklist\Controller',
+                      'controller'    => 'Index',
+                      'action'        => 'index',
+                  ),
+                  'constraints' => [
+                      'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                      'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                  ]
+              )
+          ),
+        ),
+
+    ),
+    'controllers' => array(
+        'invokables' => array(
+            'Checklist\Controller\Index' => Controller\IndexController::class
         ),
     ),
 );

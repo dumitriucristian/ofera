@@ -18,4 +18,9 @@ class IndexController extends AbstractActionController
     {
         return new ViewModel();
     }
+
+    public function doiAction(){
+        die('ssss');
+        return new ViewModel();
+    }
 }
