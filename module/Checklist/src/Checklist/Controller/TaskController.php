@@ -15,7 +15,7 @@ class TaskController extends AbstractActionController
     public function indexAction()
     {
 
-        return "test din controler";
+        die("test din controler");
         /*$mapper = $this->getTaskMapper();
         return new ViewModel(array('tasks' => $mapper->fetchAll()));
         */
