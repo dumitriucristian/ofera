@@ -1,6 +1,4 @@
-<?php
-
-namespace Checklist;
+<?php namespace Checklist;
 
 return array(
     'router' => array(
