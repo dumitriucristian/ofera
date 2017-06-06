@@ -8,7 +8,7 @@
  */
 
 namespace Application;
-die('sss');
+
 return array(
     'router' => array(
         'routes' => array(
