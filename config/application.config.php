@@ -6,11 +6,11 @@
  * @see http://framework.zend.com/manual/current/en/tutorials/config.advanced.html#environment-specific-application-configuration
  */
 
-return array( 
+return array(
     // This should be an array of module namespaces used in the application.
     'modules' => array(
         'Application',
-        'Checklist',
+        //'Checklist',
     ),
 
     // These are various options for the listeners attached to the ModuleManager
