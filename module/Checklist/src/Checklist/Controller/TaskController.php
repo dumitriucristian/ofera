@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: web
- * Date: 06.06.2017
- * Time: 15:02
- */
+
 
 namespace Checklist\Controller;
 
