@@ -10,7 +10,7 @@ return array(
                     'options' => array(
                         'route'    => '/task[/:action[/:id]]',
                         'defaults' => array(
-                        '__NAMESPACE__' => 'Checklist\Controller\TaskController',
+                        '__NAMESPACE__' => 'Checklist\Controller',
                         'controller'    => 'Task',
                         'action'        => 'index',
                     ),
