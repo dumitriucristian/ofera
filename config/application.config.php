@@ -5,7 +5,7 @@
  * @see http://framework.zend.com/manual/current/en/tutorials/config.advanced.html#environment-specific-system-configuration
  * @see http://framework.zend.com/manual/current/en/tutorials/config.advanced.html#environment-specific-application-configuration
  */
-die('config');
+die('config2');
 return array(
     // This should be an array of module namespaces used in the application.
     'modules' => array(
