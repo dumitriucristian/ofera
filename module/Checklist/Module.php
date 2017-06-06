@@ -7,7 +7,7 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace Module;
+namespace Checklist;
 
 use Checklist\Model\TaskMapper;
 use Zend\Mvc\ModuleRouteListener;
