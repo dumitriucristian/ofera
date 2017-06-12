@@ -1,0 +1,18 @@
+TO BE DONE
+1. in the Checklist module view must be changed
+2. in the Album module different database should be used but for the moment we will use the same database as Checklist todolist
+3. Write a service against an interface
+
+    create an interface
+
+    !!An invokable is a class that can be constructed without any arguments.
+    'invokables' => array(
+                 'Blog\Controller\List' => 'Blog\Controller\ListController'
+             )
+    !!A factory is a class that creates instances of another class.  .
+        'factories' => array(
+                     'Blog\Controller\List' => 'Blog\Factory\ListControllerFactory'
+                 )
+
+     create a factory
+     Factory classes always need to implement the Zend\ServiceManager\FactoryInterface

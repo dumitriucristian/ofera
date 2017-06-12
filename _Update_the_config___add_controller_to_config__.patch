@@ -1,0 +1,227 @@
+Index: module/Checklist/config/module.config.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- module/Checklist/config/module.config.php	(date 1496763332000)
++++ module/Checklist/config/module.config.php	(revision )
+@@ -2,29 +2,31 @@
+ 
+ namespace Checklist;
+ 
++
+ return array(
+     'router' => array(
+         'routes' => array(
+-            'checklist' => array(
+-                'type'    => 'Literal',
+-                'options' => array(
+-                    'route'    => '/task',
+-                    'defaults' => array(
+-                        '__NAMESPACE__' => 'Checklist\Controller',
+-                        'controller'    => 'TaskController',
+-                        'action'        => 'index',
+-                    ),
+-                ),
+-                'may_terminate' => true,
+-                'child_routes' => array(
+-                    'default' => array(
+-                        'type'    => 'Segment',
+-                        'options' => array(
+-                            'route'    => '/[:controller[/:action]]',
+-                        ),
+-                    ),
+-                ),
+-            ),
++          'default' => array(
++              'type' => 'Zend\Mvc\Router\Http\Literal',
++              'options'=> array(
++                  'route' => '/task',
++                  'defaults' => array(
++                      '__NAMESPACE__' => 'Checklist\Controller',
++                      'controller'    => 'Index',
++                      'action'        => 'index',
++                  ),
++                  'constraints' => [
++                      'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
++                      'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
++                  ]
++              )
++          ),
++        ),
++
++    ),
++    'controllers' => array(
++        'invokables' => array(
++            'Checklist\Controller\Index' => Controller\IndexController::class
+         ),
+     ),
+ );
+Index: module/Application/config/module.config.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- module/Application/config/module.config.php	(date 1496763332000)
++++ module/Application/config/module.config.php	(revision )
+@@ -26,7 +26,18 @@
+             // new controllers and actions without needing to create a new
+             // module. Simply drop new controllers in, and you can access them
+             // using the path /application/:controller/:action
+-            'application' => array(
++            's' => array(
++                'type'    => 'Zend\Mvc\Router\Http\Literal',
++                'options' => array(
++                    'route'    => '/doi',
++                    'defaults' => array(
++                        '__NAMESPACE__' => 'Application\Controller',
++                        'controller'    => 'Index',
++                        'action'        => 'doi',
++                    ),
++                ),
++            ),
++                'applications' => array(
+                 'type'    => 'Literal',
+                 'options' => array(
+                     'route'    => '/application',
+Index: module/Checklist/Module.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- module/Checklist/Module.php	(date 1496763332000)
++++ module/Checklist/Module.php	(revision )
+@@ -9,21 +9,14 @@
+ 
+ namespace Checklist;
+ 
+-use Checklist\Model\TaskMapper;
++
+ use Zend\Mvc\ModuleRouteListener;
+-use Zend\Mvc\MvcEvent;
++
+ 
+ class Module
+ {
+ 
+-/*
+-    public function onBootstrap(MvcEvent $e)
+-    {
+-        $eventManager        = $e->getApplication()->getEventManager();
+-        $moduleRouteListener = new ModuleRouteListener();
+-        $moduleRouteListener->attach($eventManager);
+-    }
+-*/
++
+     public function getConfig()
+     {
+         return include __DIR__ . '/config/module.config.php';
+@@ -39,19 +32,6 @@
+             ),
+         );
+     }
+-/*
+-    public function getServiceConfig()
+-    {
+-        return array(
+-            'factories' => array(
+-                'TaskMapper' => function ($sm) {
+-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+-                    $mapper = new TaskMapper($dbAdapter);
+-                    return $mapper;
+-                }
+-            ),
+-        );
+-    }
+-*/
+ 
+ }
++
+Index: module/Application/view/application/index/doi.phtml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- module/Application/view/application/index/doi.phtml	(revision )
++++ module/Application/view/application/index/doi.phtml	(revision )
+@@ -0,0 +1,44 @@
++<div class="jumbotron">
++    <h1><?php echo sprintf($this->translate('Welcome to %sZend Framework 2%s'), '<span class="zf-green">', '</span>') ?></h1>
++    <p><?php echo sprintf($this->translate('Congratulations! You have successfully installed the %sZF2 Skeleton Application%s. You are currently running Zend Framework version %s. This skeleton can serve as a simple starting point for you to begin building your application on ZF2.'), '<a href="https://github.com/zendframework/ZendSkeletonApplication" target="_blank">', '</a>', \Zend\Version\Version::VERSION) ?></p>
++    <p><a class="btn btn-success btn-lg" href="https://github.com/zendframework/zf2" target="_blank"><?php echo $this->translate('Fork Zend Framework 2 on GitHub') ?> &raquo;</a></p>
++</div>
++
++<div class="row">
++    <b>OI AAAAAAAAA</b>
++    <div class="col-md-4">
++        <div class="panel panel-default">
++            <div class="panel-heading">
++                <h3 class="panel-title"><?php echo $this->translate('Follow Development') ?></h3>
++            </div>
++            <div class="panel-body">
++                <p><?php echo sprintf($this->translate('Zend Framework 2 is under active development. If you are interested in following the development of ZF2, there is a special ZF2 portal on the official Zend Framework website which provides links to the ZF2 %swiki%s, %sdev blog%s, %sissue tracker%s, and much more. This is a great resource for staying up to date with the latest developments!'), '<a href="http://framework.zend.com/wiki/display/ZFDEV2/Home">', '</a>', '<a href="http://framework.zend.com/zf2/blog">', '</a>', '<a href="https://github.com/zendframework/zf2/issues">', '</a>') ?></p>
++                <p><a class="btn btn-success pull-right" href="http://framework.zend.com/zf2" target="_blank"><?php echo $this->translate('ZF2 Development Portal') ?> &raquo;</a></p>
++            </div>
++        </div>
++    </div>
++
++    <div class="col-md-4">
++        <div class="panel panel-default">
++            <div class="panel-heading">
++                <h3 class="panel-title"><?php echo $this->translate('Discover Modules') ?></h3>
++            </div>
++            <div class="panel-body">
++                <p><?php echo sprintf($this->translate('The community is working on developing a community site to serve as a repository and gallery for ZF2 modules. The project is available %son GitHub%s. The site is currently live and currently contains a list of some of the modules already available for ZF2.'), '<a href="https://github.com/zendframework/modules.zendframework.com">', '</a>') ?></p>
++                <p><a class="btn btn-success pull-right" href="http://modules.zendframework.com/" target="_blank"><?php echo $this->translate('Explore ZF2 Modules') ?> &raquo;</a></p>
++            </div>
++        </div>
++    </div>
++
++    <div class="col-md-4">
++        <div class="panel panel-default">
++            <div class="panel-heading">
++                <h3 class="panel-title"><?php echo $this->translate('Help &amp; Support') ?></h3>
++            </div>
++            <div class="panel-body">
++                <p><?php echo sprintf($this->translate('If you need any help or support while developing with ZF2, you may reach us via IRC: %s#zftalk on Freenode%s. We\'d love to hear any questions or feedback you may have regarding the beta releases. Alternatively, you may subscribe and post questions to the %smailing lists%s.'), '<a href="irc://irc.freenode.net/zftalk">', '</a>', '<a href="http://framework.zend.com/wiki/display/ZFDEV/Mailing+Lists">', '</a>') ?></p>
++                <p><a class="btn btn-success pull-right" href="http://webchat.freenode.net?channels=zftalk" target="_blank"><?php echo $this->translate('Ping us on IRC') ?> &raquo;</a></p>
++            </div>
++        </div>
++    </div>
++</div>
+Index: module/Application/src/Application/Controller/IndexController.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- module/Application/src/Application/Controller/IndexController.php	(date 1496763332000)
++++ module/Application/src/Application/Controller/IndexController.php	(revision )
+@@ -18,4 +18,9 @@
+     {
+         return new ViewModel();
+     }
++
++    public function doiAction(){
++        die('ssss');
++        return new ViewModel();
++    }
+ }
+Index: module/Checklist/src/Checklist/Controller/TaskController.php
+===================================================================
+--- module/Checklist/src/Checklist/Controller/TaskController.php	(date 1496763332000)
++++ module/Checklist/src/Checklist/Controller/IndexController.php	(revision )
+@@ -5,12 +5,13 @@
+ 
+ use Zend\Mvc\Controller\AbstractActionController;
+ 
+-class TaskController extends AbstractActionController
++class IndexController extends AbstractActionController
+ {
+     public function indexAction()
+     {
+ 
+         die("test din controler");
++        return "ceva ce nu merge";
+         /*$mapper = $this->getTaskMapper();
+         return new ViewModel(array('tasks' => $mapper->fetchAll()));
+         */

@@ -32,7 +32,6 @@ class TaskMapper
     {
         $select = $this->sql->select();
         $select->order(array('completed ASC', 'created ASC'));
-
         $statement = $this->sql->prepareStatementForSqlObject($select);
         $results = $statement->execute();
 
@@ -41,5 +40,60 @@ class TaskMapper
         $resultset = new HydratingResultSet($hydrator, $entityPrototype);
         $resultset->initialize($results);
         return $resultset;
+    }
+
+
+
+    public function saveTask(TaskEntity $task)
+    {
+        $hydrator = new ClassMethods();
+        $data = $hydrator->extract($task);
+
+        if ($task->getId()) {
+            // update action
+            $action = $this->sql->update();
+            $action->set($data);
+            $action->where(array('id' => $task->getId()));
+        } else {
+            // insert action
+            $action = $this->sql->insert();
+            unset($data['id']);
+            $action->values($data);
+        }
+        $statement = $this->sql->prepareStatementForSqlObject($action);
+        $result = $statement->execute();
+
+        if (!$task->getId()) {
+            $task->setId($result->getGeneratedValue());
+        }
+        return $result;
+
+    }
+
+    public function getTask($id)
+    {
+        $select = $this->sql->select();
+        $select->where(array('id' => $id));
+
+        $statement = $this->sql->prepareStatementForSqlObject($select);
+        $result = $statement->execute()->current();
+        if (!$result) {
+            return null;
+        }
+
+        $hydrator = new ClassMethods();
+        $task = new TaskEntity();
+        $hydrator->hydrate($result, $task);
+
+        return $task;
+    }
+
+    public function deleteTask($id)
+    {
+        $delete = $this->sql->delete();
+        $delete->where(array('id' => $id));
+
+        $statement = $this->sql->prepareStatementForSqlObject($delete);
+        return $statement->execute();
     }
 }

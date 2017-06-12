@@ -6,29 +6,39 @@ namespace Checklist;
 return array(
     'router' => array(
         'routes' => array(
-          'default' => array(
-              'type' => 'Zend\Mvc\Router\Http\Literal',
-              'options'=> array(
-                  'route' => '/task',
+            'task' => array(
+                'type' => 'Segment',
+                'options'=> array(
+                  'route' => '/task[/:action[/:id]]',
                   'defaults' => array(
                       '__NAMESPACE__' => 'Checklist\Controller',
-                      'controller'    => 'Index',
+                      'controller'    => 'Task',
                       'action'        => 'index',
                   ),
-                  'constraints' => [
-                      'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                      'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-                  ]
-              )
-          ),
+                  'constraints' => array(
+                    'action'     => '(add|edit|delete)',
+                    'id'       => '[0-9]+',
+                  ),
+                ),
+            ),
         ),
-
     ),
     'controllers' => array(
         'invokables' => array(
-            'Checklist\Controller\Index' => Controller\IndexController::class
+            'Checklist\Controller\Task' => Controller\TaskController::class
         ),
     ),
+
+    'view_manager' => array(
+        //load general template
+        'template_map' => array(
+            'layout/layout'   => __DIR__ . '/../view/layout/layout.phtml',
+        ),
+        'template_path_stack' => array(
+            __DIR__ . '/../view',
+        ),
+    ),
+
 );
 
 /*'controller'    => 'Checklist\Controller\TaskController',*/

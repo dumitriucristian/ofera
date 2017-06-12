@@ -11,11 +11,34 @@ namespace Checklist;
 
 
 use Zend\Mvc\ModuleRouteListener;
+use Checklist\Model\TaskMapper;
+use Zend\View\Model\ViewModel;
 
 
 class Module
 {
+    /*
+    public function onBootstrap(MvcEvent $e)
+    {
+        $eventManager        = $e->getApplication()->getEventManager();
+        $moduleRouteListener = new ModuleRouteListener();
+        $moduleRouteListener->attach($eventManager);
+    }
 
+    */
+
+    public function getServiceConfig()
+    {
+        return array(
+            'factories' => array(
+                'TaskMapper' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $mapper = new TaskMapper($dbAdapter);
+                    return $mapper;
+                }
+            ),
+        );
+    }
 
     public function getConfig()
     {
@@ -32,6 +55,8 @@ class Module
             ),
         );
     }
+
+
 
 }
 
