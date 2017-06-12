@@ -33,4 +33,23 @@ class ListController extends AbstractActionController
         );
     }
 
+    public function detailAction(){
+
+        $id = $this->params()->fromRoute('id');
+
+
+        try {
+            $post = $this->postService->findPost($id);
+        } catch (\InvalidArgumentException $ex) {
+            return $this->redirect()->toRoute('blog');
+        }
+
+        return new ViewModel(
+            array(
+                'post' => $post
+            )
+        );
+
+    }
+
 }
